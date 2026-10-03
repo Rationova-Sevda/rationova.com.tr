@@ -22,18 +22,18 @@
 @media(max-width:760px){.container{width:min(100% - 30px,1180px)}.nav{min-height:72px}.menu-toggle{display:block}.nav-links{display:none;position:absolute;left:15px;right:15px;top:70px;padding:16px;flex-direction:column;align-items:stretch;gap:4px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}.nav-links.open{display:flex}.nav-links a{padding:10px 8px}.nav-links .nav-cta{text-align:center;margin-top:5px}.hero{min-height:650px;background-position:58% center}.hero-content{padding:80px 0}.hero h1{font-size:clamp(39px,12vw,58px);letter-spacing:-2px}.hero p{font-size:16px}.section{padding:72px 0}.section-heading{margin-bottom:34px}.page-hero{padding:78px 0}.grid-4{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.newsletter{padding:34px 24px}.newsletter-form{flex-direction:column}.product-feature{padding:32px 24px}.product-feature h2{font-size:28px}}
 
 /* Rationova local image system */
-.about-image{background-image:linear-gradient(180deg,transparent,rgba(6,26,53,.16)),url('../images/hakkimizda.jpg')}
-.mission-image{background-image:linear-gradient(180deg,rgba(4,19,39,.05),rgba(4,19,39,.18)),url('../images/misyon-vizyon.jpg')}
-.product-image{background-image:linear-gradient(180deg,rgba(4,19,39,.05),rgba(4,19,39,.20)),url('../images/urun.jpg')}
-.blog-image{background-image:linear-gradient(180deg,rgba(4,19,39,.04),rgba(4,19,39,.18)),url('../images/blog.jpg')}
-.product-feature-image{position:relative;min-height:320px;display:flex;align-items:center;background-image:linear-gradient(90deg,rgba(4,19,39,.96) 0%,rgba(6,26,53,.84) 48%,rgba(6,26,53,.28) 100%),url('../images/urun.jpg');background-size:cover;background-position:center}
+.about-image{background-image:linear-gradient(180deg,transparent,rgba(6,26,53,.16)),url('../hakkimizda.jpg')}
+.mission-image{background-image:linear-gradient(180deg,rgba(4,19,39,.05),rgba(4,19,39,.18)),url('../misyon-vizyon.jpg')}
+.product-image{background-image:linear-gradient(180deg,rgba(4,19,39,.05),rgba(4,19,39,.20)),url('../urun.jpg')}
+.blog-image{background-image:linear-gradient(180deg,rgba(4,19,39,.04),rgba(4,19,39,.18)),url('../blog.jpg')}
+.product-feature-image{position:relative;min-height:320px;display:flex;align-items:center;background-image:linear-gradient(90deg,rgba(4,19,39,.96) 0%,rgba(6,26,53,.84) 48%,rgba(6,26,53,.28) 100%),url('../urun.jpg');background-size:cover;background-position:center}
 .product-feature-image > div{position:relative;z-index:1;max-width:650px}
 .corporate-visual{padding-top:0}.corporate-visual .mission-image{min-height:420px;border-radius:26px;background-size:cover;background-position:center;box-shadow:var(--shadow)}
-.page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.62)),url('../images/ana-sayfa.jpg')}
+.page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.62)),url('../ana-sayfa.jpg')}
 
-.about-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.88),rgba(8,45,87,.58)),url('../images/hakkimizda.jpg')}
-.products-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.60)),url('../images/urun.jpg')}
-.mission-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.58)),url('../images/misyon-vizyon.jpg')}
-.blog-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.88),rgba(8,45,87,.55)),url('../images/blog.jpg')}
-.contact-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.92),rgba(8,45,87,.65)),url('../images/hakkimizda.jpg')}
-.newsletter-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.58)),url('../images/blog.jpg')}
+.about-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.88),rgba(8,45,87,.58)),url('../hakkimizda.jpg')}
+.products-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.60)),url('../urun.jpg')}
+.mission-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.58)),url('../misyon-vizyon.jpg')}
+.blog-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.88),rgba(8,45,87,.55)),url('../blog.jpg')}
+.contact-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.92),rgba(8,45,87,.65)),url('../hakkimizda.jpg')}
+.newsletter-page-hero{background-image:linear-gradient(100deg,rgba(4,19,39,.90),rgba(8,45,87,.58)),url('../blog.jpg')}
