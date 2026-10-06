@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Yıllık izin planlaması - En uzun tatili yapmak için en uygun günleri bulun">
+  <title>İzin Planla | Rationova</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .holiday-planner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .input-section {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 32px;
+    }
+
+    .input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field label {
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 14px;
+    }
+
+    .form-field input, .form-field select {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: 'DM Sans', Arial, sans-serif;
+      color: var(--text);
+    }
+
+    .form-field input:focus, .form-field select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-calculate {
+      padding: 12px 32px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      flex: 1;
+    }
+
+    .btn-calculate:hover {
+      background: #1557b8;
+    }
+
+    .btn-reset {
+      padding: 12px 32px;
+      background: var(--border);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-reset:hover {
+      background: #d0d9e3;
+    }
+
+    .results-section {
+      display: none;
+    }
+
+    .results-section.active {
+      display: block;
+    }
+
+    .results-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .recommendations {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .recommendations h3 {
+      margin: 0 0 20px;
+      color: var(--navy);
+      font-size: 22px;
+    }
+
+    .recommendation-item {
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--blue);
+    }
+
+    .recommendation-item strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .recommendation-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .recommendation-item.best {
+      background: linear-gradient(135deg, rgba(25, 185, 214, 0.08), rgba(23, 105, 224, 0.08));
+      border-left-color: var(--cyan);
+      box-shadow: 0 2px 8px rgba(25, 185, 214, 0.1);
+    }
+
+    .calendar-section {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-section h3 {
+      margin: 0 0 20px;
+      color: var(--navy);
+      font-size: 22px;
+    }
+
+    .calendar-wrapper {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .mini-calendar {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .calendar-header h4 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .day-header {
+      text-align: center;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 0;
+    }
+
+    .day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: default;
+    }
+
+    .day-cell.other-month {
+      color: var(--border);
+    }
+
+    .day-cell.weekend {
+      background: rgba(23, 105, 224, 0.06);
+      color: var(--blue);
+    }
+
+    .day-cell.holiday {
+      background: var(--cyan);
+      color: #fff;
+      font-weight: 600;
+      border: 1px solid var(--cyan);
+    }
+
+    .day-cell.recommended {
+      background: rgba(25, 185, 214, 0.2);
+      border: 2px dashed var(--cyan);
+    }
+
+    .day-cell.best-option {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 0 0 2px rgba(23, 105, 224, 0.2);
+    }
+
+    .legend {
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+
+    .legend h4 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .legend-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .legend-color {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(25, 185, 214, 0.1), rgba(23, 105, 224, 0.1));
+      border: 1px solid rgba(25, 185, 214, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: var(--navy);
+    }
+
+    @media (max-width: 1000px) {
+      .input-group {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .results-container {
+        grid-template-columns: 1fr;
+      }
+
+      .legend-items {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .input-group {
+        grid-template-columns: 1fr;
+      }
+
+      .input-section {
+        padding: 20px;
+      }
+
+      .recommendations,
+      .calendar-section {
+        padding: 20px;
+      }
+
+      .legend-items {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-wrapper {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html" aria-label="Rationova ana sayfa">
+        <img src="logo.jpg" alt="Rationova logosu">
+      </a>
+      <button class="menu-toggle" aria-label="Menüyü aç">☰</button>
+      <nav class="nav-links">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="hakkimizda.html">Hakkımızda</a>
+        <a href="urunler.html">Ürünler</a>
+        <a href="misyon-vizyon.html">Kurumsal</a>
+        <a href="blog.html">Blog</a>
+        <a href="iletisim.html">İletişim</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Akıllı İzin Planlayıcı</h1>
+      <p>Yıllık izin günlerinizi optimize edin ve en uzun tatili planlayın</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container holiday-planner">
+      <div class="input-section">
+        <h2 style="margin: 0 0 24px; color: var(--navy);">İzin Bilgilerini Girin</h2>
+        
+        <div class="input-group">
+          <div class="form-field">
+            <label for="year">Yıl</label>
+            <select id="year">
+              <option value="2024">2024</option>
+              <option value="2025" selected>2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="totalDays">Toplam İzin Günü</label>
+            <input type="number" id="totalDays" min="1" max="45" value="20" placeholder="20">
+          </div>
+
+          <div class="form-field">
+            <label for="startMonth">Başlangıç Ayı</label>
+            <select id="startMonth">
+              <option value="1">Ocak</option>
+              <option value="2">Şubat</option>
+              <option value="3">Mart</option>
+              <option value="4">Nisan</option>
+              <option value="5">Mayıs</option>
+              <option value="6">Haziran</option>
+              <option value="7" selected>Temmuz</option>
+              <option value="8">Ağustos</option>
+              <option value="9">Eylül</option>
+              <option value="10">Ekim</option>
+              <option value="11">Kasım</option>
+              <option value="12">Aralık</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn-calculate" onclick="calculateOptimalDays()">Optimal Günleri Hesapla</button>
+          <button class="btn-reset" onclick="resetForm()">Sıfırla</button>
+        </div>
+      </div>
+
+      <div class="results-section" id="resultsSection">
+        <div class="results-container">
+          <div class="recommendations">
+            <h3>Önerilen İzin Dönemleri</h3>
+            <div id="recommendationsList"></div>
+          </div>
+
+          <div class="calendar-section">
+            <h3>Takvim Görünümü</h3>
+            <div class="calendar-wrapper" id="calendarContainer"></div>
+            
+            <div class="legend">
+              <h4>Gösterge</h4>
+              <div class="legend-items">
+                <div class="legend-item">
+                  <div class="legend-color" style="background: var(--cyan);"></div>
+                  <span>İzin Günü</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: rgba(23, 105, 224, 0.06);"></div>
+                  <span>Hafta Sonu</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: var(--blue);"></div>
+                  <span>En Uygun Seçenek</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-box">
+              <strong>💡 İpucu:</strong> Hafta sonları ile komşu günler kombinasyonunu seçerek daha uzun tatil yapabilirsiniz. Örneğin, Cuma ve Pazartesi arası sadece 3 iş günü izin kullanarak 5 günlük tatil yapabilirsiniz.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo footer-logo" href="index.html"><span class="logo-mark">R</span>Rationova</a>
+          <p>Üretim planlamanın geleceğini inşa ediyoruz.</p>
+        </div>
+        <div>
+          <h4>Şirket</h4>
+          <a href="hakkimizda.html">Hakkımızda</a>
+          <a href="misyon-vizyon.html">Misyon & Vizyon</a>
+          <a href="urunler.html">Ürünler</a>
+        </div>
+        <div>
+          <h4>Bilgiler</h4>
+          <a href="blog.html">Blog</a>
+          <a href="iletisim.html">İletişim</a>
+          <a href="bulten.html">Bülten</a>
+        </div>
+        <div>
+          <h4>Sosyal Medya</h4>
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Ay adları
+    const monthNames = [
+      'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    ];
+
+    const dayNames = ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Pz'];
+
+    function calculateOptimalDays() {
+      const year = parseInt(document.getElementById('year').value);
+      const totalDays = parseInt(document.getElementById('totalDays').value);
+      const startMonth = parseInt(document.getElementById('startMonth').value);
+
+      if (!totalDays || totalDays < 1) {
+        alert('Lütfen geçerli bir izin günü sayısı girin');
+        return;
+      }
+
+      const recommendations = findOptimalCombinations(year, startMonth, totalDays);
+      displayResults(recommendations, year, startMonth, totalDays);
+    }
+
+    function findOptimalCombinations(year, startMonth, totalDays) {
+      const combinations = [];
+      
+      // 6 ay öncesi ve sonrası ara
+      for (let month = Math.max(1, startMonth - 3); month <= Math.min(12, startMonth + 3); month++) {
+        for (let day = 1; day <= 28; day++) {
+          const result = checkCombination(year, month, day, totalDays);
+          if (result.totalDays >= 5) {
+            combinations.push(result);
+          }
+        }
+      }
+
+      // En iyi kombinasyonları sırala (en uzun tatil süresi)
+      combinations.sort((a, b) => b.totalDays - a.totalDays);
+      return combinations.slice(0, 5);
+    }
+
+    function checkCombination(year, month, day, workDays) {
+      let current = new Date(year, month - 1, day);
+      const start = new Date(current);
+      let usedDays = 0;
+      let totalCalendarDays = 0;
+      const holidayDates = [];
+
+      // İzin günlerini kullanarak devam et
+      while (usedDays < workDays && totalCalendarDays < 120) {
+        const dayOfWeek = current.getDay();
+        totalCalendarDays++;
+
+        // Hafta sonu değilse izin günü say
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+          usedDays++;
+          holidayDates.push(new Date(current));
+        } else {
+          holidayDates.push(new Date(current));
+        }
+
+        current.setDate(current.getDate() + 1);
+      }
+
+      return {
+        startDate: new Date(start),
+        endDate: new Date(current),
+        totalDays: totalCalendarDays,
+        workDaysUsed: workDays,
+        holidayDates: holidayDates
+      };
+    }
+
+    function displayResults(recommendations, year, startMonth, totalDays) {
+      const resultsSection = document.getElementById('resultsSection');
+      const recommendationsList = document.getElementById('recommendationsList');
+      const calendarContainer = document.getElementById('calendarContainer');
+
+      // Öneriler
+      recommendationsList.innerHTML = '';
+      recommendations.forEach((rec, index) => {
+        const startStr = formatDate(rec.startDate);
+        const endStr = formatDate(new Date(rec.endDate.getTime() - 86400000));
+        const bestClass = index === 0 ? 'best' : '';
+
+        const item = document.createElement('div');
+        item.className = `recommendation-item ${bestClass}`;
+        item.innerHTML = `
+          <strong>${startStr} - ${endStr}</strong>
+          <span>📅 ${rec.totalDays} takvim günü | 💼 ${totalDays} iş günü izin | ⭐ ${Math.floor((rec.totalDays / totalDays) * 100)}% verimlilik</span>
+        `;
+        recommendationsList.appendChild(item);
+      });
+
+      // Takvim gösterimi
+      calendarContainer.innerHTML = '';
+      const selectedRec = recommendations[0];
+      
+      // 3 ay göster
+      for (let offset = -1; offset <= 1; offset++) {
+        const month = startMonth + offset;
+        let displayMonth = month;
+        let displayYear = year;
+
+        if (displayMonth < 1) {
+          displayMonth += 12;
+          displayYear--;
+        } else if (displayMonth > 12) {
+          displayMonth -= 12;
+          displayYear++;
+        }
+
+        const calendar = createMiniCalendar(displayYear, displayMonth, selectedRec.holidayDates);
+        calendarContainer.appendChild(calendar);
+      }
+
+      resultsSection.classList.add('active');
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function createMiniCalendar(year, month, holidayDates) {
+      const div = document.createElement('div');
+      div.className = 'mini-calendar';
+
+      const header = document.createElement('div');
+      header.className = 'calendar-header';
+      header.innerHTML = `<h4>${monthNames[month - 1]} ${year}</h4>`;
+      div.appendChild(header);
+
+      const grid = document.createElement('div');
+      grid.className = 'calendar-grid';
+
+      // Gün başlıkları
+      dayNames.forEach(dayName => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+        dayHeader.textContent = dayName;
+        grid.appendChild(dayHeader);
+      });
+
+      // Günleri doldur
+      const firstDay = new Date(year, month - 1, 1);
+      const lastDay = new Date(year, month, 0);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+      for (let i = 0; i < 42; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'day-cell';
+
+        if (startDate.getMonth() !== month - 1) {
+          cell.classList.add('other-month');
+        } else {
+          const dayOfWeek = startDate.getDay();
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            cell.classList.add('weekend');
+          }
+        }
+
+        const isHoliday = holidayDates.some(
+          date => date.getDate() === startDate.getDate() &&
+            date.getMonth() === startDate.getMonth() &&
+            date.getFullYear() === startDate.getFullYear()
+        );
+
+        if (isHoliday) {
+          cell.classList.add('holiday');
+        }
+
+        cell.textContent = startDate.getDate();
+        grid.appendChild(cell);
+        startDate.setDate(startDate.getDate() + 1);
+      }
+
+      div.appendChild(grid);
+      return div;
+    }
+
+    function formatDate(date) {
+      const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('tr-TR', options);
+    }
+
+    function resetForm() {
+      document.getElementById('year').value = new Date().getFullYear();
+      document.getElementById('totalDays').value = '20';
+      document.getElementById('startMonth').value = '7';
+      document.getElementById('resultsSection').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
