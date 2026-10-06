@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Yıllık izin planlaması - En uzun tatili yapmak için en uygun günleri bulun">
-  <title>İzin Planla | Rationova</title>
+  <meta name="description" content="Akıllı İzin Planlaması - Resmi Tatiller Göz Önüne Alarak Optimize Edilmiş İzin Planlama">
+  <title>Akıllı İzin Planlaması | Rationova</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .holiday-planner {
@@ -121,31 +121,54 @@
     }
 
     .recommendation-item {
-      padding: 16px;
+      padding: 18px;
       background: var(--bg);
       border-radius: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       border-left: 4px solid var(--blue);
+      transition: 0.3s;
+    }
+
+    .recommendation-item:hover {
+      box-shadow: 0 4px 12px rgba(23, 105, 224, 0.15);
+      transform: translateX(4px);
     }
 
     .recommendation-item strong {
       display: block;
       color: var(--navy);
-      margin-bottom: 4px;
-      font-size: 15px;
+      margin-bottom: 6px;
+      font-size: 16px;
     }
 
-    .recommendation-item span {
-      display: block;
+    .recommendation-item .date-range {
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .stat-row span:last-child {
+      font-weight: 600;
+      color: var(--blue);
     }
 
     .recommendation-item.best {
-      background: linear-gradient(135deg, rgba(25, 185, 214, 0.08), rgba(23, 105, 224, 0.08));
+      background: linear-gradient(135deg, rgba(25, 185, 214, 0.1), rgba(23, 105, 224, 0.1));
       border-left-color: var(--cyan);
-      box-shadow: 0 2px 8px rgba(25, 185, 214, 0.1);
+      box-shadow: 0 4px 16px rgba(25, 185, 214, 0.2);
+    }
+
+    .recommendation-item.best strong::before {
+      content: "⭐ ";
+      color: #ffc107;
     }
 
     .calendar-section {
@@ -209,10 +232,11 @@
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       border: 1px solid transparent;
       cursor: default;
+      position: relative;
     }
 
     .day-cell.other-month {
@@ -231,16 +255,24 @@
       border: 1px solid var(--cyan);
     }
 
-    .day-cell.recommended {
-      background: rgba(25, 185, 214, 0.2);
-      border: 2px dashed var(--cyan);
+    .day-cell.official-holiday {
+      background: #ff6b6b;
+      color: #fff;
+      font-weight: 600;
+      position: relative;
     }
 
-    .day-cell.best-option {
+    .day-cell.official-holiday::after {
+      content: "●";
+      position: absolute;
+      font-size: 20px;
+      opacity: 0.3;
+    }
+
+    .day-cell.vacation-used {
       background: var(--blue);
       color: #fff;
       font-weight: 600;
-      box-shadow: 0 0 0 2px rgba(23, 105, 224, 0.2);
     }
 
     .legend {
@@ -293,6 +325,36 @@
       color: var(--navy);
     }
 
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(23, 105, 224, 0.1), rgba(25, 185, 214, 0.1));
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(23, 105, 224, 0.2);
+    }
+
+    .stat-card .number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+
+    .stat-card .label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     @media (max-width: 1000px) {
       .input-group {
         grid-template-columns: 1fr 1fr;
@@ -303,7 +365,11 @@
       }
 
       .legend-items {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -328,6 +394,10 @@
       .calendar-wrapper {
         flex-direction: column;
       }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -344,6 +414,7 @@
         <a href="urunler.html">Ürünler</a>
         <a href="misyon-vizyon.html">Kurumsal</a>
         <a href="blog.html">Blog</a>
+        <a class="active" href="izin-planla.html">İzin Planla</a>
         <a href="iletisim.html">İletişim</a>
       </nav>
     </div>
@@ -352,7 +423,7 @@
   <section class="page-hero">
     <div class="container">
       <h1>Akıllı İzin Planlayıcı</h1>
-      <p>Yıllık izin günlerinizi optimize edin ve en uzun tatili planlayın</p>
+      <p>Resmi tatilleri göz önüne alarak minimum izin kullanıp maksimum tatil yapın</p>
     </div>
   </section>
 
@@ -374,7 +445,7 @@
           </div>
 
           <div class="form-field">
-            <label for="totalDays">Toplam İzin Günü</label>
+            <label for="totalDays">Toplam İzin Günü (İş Günü)</label>
             <input type="number" id="totalDays" min="1" max="45" value="20" placeholder="20">
           </div>
 
@@ -398,42 +469,48 @@
         </div>
 
         <div class="button-group">
-          <button class="btn-calculate" onclick="calculateOptimalDays()">Optimal Günleri Hesapla</button>
+          <button class="btn-calculate" onclick="calculateOptimalDays()">🎯 Optimal Günleri Hesapla</button>
           <button class="btn-reset" onclick="resetForm()">Sıfırla</button>
         </div>
       </div>
 
       <div class="results-section" id="resultsSection">
+        <div class="stats-grid" id="statsGrid"></div>
+
         <div class="results-container">
           <div class="recommendations">
-            <h3>Önerilen İzin Dönemleri</h3>
+            <h3>📋 En Etkili İzin Kombinasyonları</h3>
             <div id="recommendationsList"></div>
           </div>
 
           <div class="calendar-section">
-            <h3>Takvim Görünümü</h3>
+            <h3>📅 Takvim Görünümü (En İyi Seçenek)</h3>
             <div class="calendar-wrapper" id="calendarContainer"></div>
             
             <div class="legend">
               <h4>Gösterge</h4>
               <div class="legend-items">
                 <div class="legend-item">
-                  <div class="legend-color" style="background: var(--cyan);"></div>
-                  <span>İzin Günü</span>
+                  <div class="legend-color" style="background: var(--blue);"></div>
+                  <span>İzin Günü (Kullanılan)</span>
                 </div>
                 <div class="legend-item">
                   <div class="legend-color" style="background: rgba(23, 105, 224, 0.06);"></div>
-                  <span>Hafta Sonu</span>
+                  <span>Hafta Sonu (Otomatik)</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: var(--blue);"></div>
-                  <span>En Uygun Seçenek</span>
+                  <div class="legend-color" style="background: #ff6b6b;"></div>
+                  <span>Resmi Tatil</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: var(--cyan);"></div>
+                  <span>Toplam Tatil</span>
                 </div>
               </div>
             </div>
 
             <div class="info-box">
-              <strong>💡 İpucu:</strong> Hafta sonları ile komşu günler kombinasyonunu seçerek daha uzun tatil yapabilirsiniz. Örneğin, Cuma ve Pazartesi arası sadece 3 iş günü izin kullanarak 5 günlük tatil yapabilirsiniz.
+              <strong>💡 İpucu:</strong> Resmi tatillerin yanına hafta sonu veya komşu günleri ekleyerek, çok daha uzun tatiller yapabilirsiniz. Örneğin, Ramazan Bayramı (3 gün) + Cuma + Pazartesi = 1 izin günü kullanarak 7 gün tatil!
             </div>
           </div>
         </div>
@@ -457,8 +534,8 @@
         <div>
           <h4>Bilgiler</h4>
           <a href="blog.html">Blog</a>
+          <a href="izin-planla.html">İzin Planla</a>
           <a href="iletisim.html">İletişim</a>
-          <a href="bulten.html">Bülten</a>
         </div>
         <div>
           <h4>Sosyal Medya</h4>
@@ -472,13 +549,44 @@
 
   <script src="script.js"></script>
   <script>
-    // Ay adları
-    const monthNames = [
-      'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    // 2025 Türkiye Resmi Tatilleri ve Hafta Sonu Tatilleri
+    const officialHolidays2025 = [
+      { date: '2025-01-01', name: 'Yeni Yıl', days: 1 },
+      { date: '2025-04-23', name: 'Ulusal Egemenlik Günü', days: 1 },
+      { date: '2025-05-01', name: 'İşçi Bayramı', days: 1 },
+      { date: '2025-07-15', name: 'Demokrasi ve Milli Birlik Günü', days: 1 },
+      { date: '2025-08-30', name: 'Zafer Bayramı', days: 1 },
+      { date: '2025-03-31', name: 'Ramazan Bayramı', days: 3 },
+      { date: '2025-06-16', name: 'Kurban Bayramı (Başlangıç)', days: 4 },
+      { date: '2025-10-29', name: 'Cumhuriyet Bayramı', days: 1 }
     ];
 
-    const dayNames = ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Pz'];
+    const officialHolidays2024 = [
+      { date: '2024-01-01', name: 'Yeni Yıl', days: 1 },
+      { date: '2024-04-23', name: 'Ulusal Egemenlik Günü', days: 1 },
+      { date: '2024-05-01', name: 'İşçi Bayramı', days: 1 },
+      { date: '2024-07-15', name: 'Demokrasi ve Milli Birlik Günü', days: 1 },
+      { date: '2024-08-30', name: 'Zafer Bayramı', days: 1 },
+      { date: '2024-04-10', name: 'Ramazan Bayramı', days: 3 },
+      { date: '2024-06-16', name: 'Kurban Bayramı', days: 4 },
+      { date: '2024-10-29', name: 'Cumhuriyet Bayramı', days: 1 }
+    ];
+
+    function getOfficialHolidaysForYear(year) {
+      if (year === 2024) return officialHolidays2024;
+      if (year === 2025) return officialHolidays2025;
+      return officialHolidays2025; // Default to 2025
+    }
+
+    function isOfficialHoliday(date, officialHolidays) {
+      const dateStr = date.toISOString().split('T')[0];
+      return officialHolidays.some(holiday => {
+        const holidayDate = new Date(holiday.date);
+        const endDate = new Date(holidayDate);
+        endDate.setDate(endDate.getDate() + holiday.days - 1);
+        return date >= holidayDate && date <= endDate;
+      });
+    }
 
     function calculateOptimalDays() {
       const year = parseInt(document.getElementById('year').value);
@@ -490,64 +598,113 @@
         return;
       }
 
-      const recommendations = findOptimalCombinations(year, startMonth, totalDays);
-      displayResults(recommendations, year, startMonth, totalDays);
+      const officialHolidays = getOfficialHolidaysForYear(year);
+      const recommendations = findOptimalCombinations(year, startMonth, totalDays, officialHolidays);
+      displayResults(recommendations, year, startMonth, totalDays, officialHolidays);
     }
 
-    function findOptimalCombinations(year, startMonth, totalDays) {
+    function findOptimalCombinations(year, startMonth, totalDays, officialHolidays) {
       const combinations = [];
       
-      // 6 ay öncesi ve sonrası ara
-      for (let month = Math.max(1, startMonth - 3); month <= Math.min(12, startMonth + 3); month++) {
+      // 12 ay tarayarak tüm kombinasyonları kontrol et
+      for (let month = 1; month <= 12; month++) {
         for (let day = 1; day <= 28; day++) {
-          const result = checkCombination(year, month, day, totalDays);
-          if (result.totalDays >= 5) {
-            combinations.push(result);
+          try {
+            const startDate = new Date(year, month - 1, day);
+            const result = calculateVacationPeriod(startDate, totalDays, officialHolidays);
+            
+            if (result && result.totalCalendarDays >= 5) {
+              combinations.push(result);
+            }
+          } catch (e) {
+            // Geçersiz tarih, devam et
           }
         }
       }
 
-      // En iyi kombinasyonları sırala (en uzun tatil süresi)
-      combinations.sort((a, b) => b.totalDays - a.totalDays);
+      // En iyi kombinasyonları sırala (verimlilik oranına göre)
+      combinations.sort((a, b) => {
+        const efficiencyA = a.totalCalendarDays / a.vacationDaysUsed;
+        const efficiencyB = b.totalCalendarDays / b.vacationDaysUsed;
+        return efficiencyB - efficiencyA;
+      });
+
       return combinations.slice(0, 5);
     }
 
-    function checkCombination(year, month, day, workDays) {
-      let current = new Date(year, month - 1, day);
+    function calculateVacationPeriod(startDate, workDays, officialHolidays) {
+      let current = new Date(startDate);
       const start = new Date(current);
       let usedDays = 0;
       let totalCalendarDays = 0;
-      const holidayDates = [];
+      const vacationDates = [];
+      const officialHolidayDates = [];
+      const weekendDates = [];
 
-      // İzin günlerini kullanarak devam et
-      while (usedDays < workDays && totalCalendarDays < 120) {
+      // Maksimum 150 gün ara
+      const maxDays = 150;
+
+      while (usedDays < workDays && totalCalendarDays < maxDays) {
         const dayOfWeek = current.getDay();
-        totalCalendarDays++;
-
-        // Hafta sonu değilse izin günü say
-        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-          usedDays++;
-          holidayDates.push(new Date(current));
+        
+        if (isOfficialHoliday(current, officialHolidays)) {
+          // Resmi tatil - bedava
+          officialHolidayDates.push(new Date(current));
+        } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+          // Hafta sonu - bedava
+          weekendDates.push(new Date(current));
         } else {
-          holidayDates.push(new Date(current));
+          // Normal iş günü - izin kullan
+          if (usedDays < workDays) {
+            usedDays++;
+            vacationDates.push(new Date(current));
+          }
         }
 
+        totalCalendarDays++;
         current.setDate(current.getDate() + 1);
       }
 
-      return {
-        startDate: new Date(start),
-        endDate: new Date(current),
-        totalDays: totalCalendarDays,
-        workDaysUsed: workDays,
-        holidayDates: holidayDates
-      };
+      if (usedDays === workDays) {
+        return {
+          startDate: new Date(start),
+          endDate: new Date(current),
+          totalCalendarDays: totalCalendarDays,
+          vacationDaysUsed: workDays,
+          vacationDates: vacationDates,
+          officialHolidayDates: officialHolidayDates,
+          weekendDates: weekendDates,
+          efficiency: (totalCalendarDays / workDays).toFixed(2)
+        };
+      }
+
+      return null;
     }
 
-    function displayResults(recommendations, year, startMonth, totalDays) {
+    function displayResults(recommendations, year, startMonth, totalDays, officialHolidays) {
       const resultsSection = document.getElementById('resultsSection');
       const recommendationsList = document.getElementById('recommendationsList');
       const calendarContainer = document.getElementById('calendarContainer');
+      const statsGrid = document.getElementById('statsGrid');
+
+      // İstatistikleri göster
+      if (recommendations.length > 0) {
+        const best = recommendations[0];
+        statsGrid.innerHTML = `
+          <div class="stat-card">
+            <div class="number">${best.totalCalendarDays}</div>
+            <div class="label">Takvim Günü</div>
+          </div>
+          <div class="stat-card">
+            <div class="number">${best.vacationDaysUsed}</div>
+            <div class="label">İzin Günü Kullanılan</div>
+          </div>
+          <div class="stat-card">
+            <div class="number">${best.efficiency}x</div>
+            <div class="label">Verimlilik Çarpanı</div>
+          </div>
+        `;
+      }
 
       // Öneriler
       recommendationsList.innerHTML = '';
@@ -560,40 +717,66 @@
         item.className = `recommendation-item ${bestClass}`;
         item.innerHTML = `
           <strong>${startStr} - ${endStr}</strong>
-          <span>📅 ${rec.totalDays} takvim günü | 💼 ${totalDays} iş günü izin | ⭐ ${Math.floor((rec.totalDays / totalDays) * 100)}% verimlilik</span>
+          <div class="date-range">${rec.totalCalendarDays} takvim günü | ${(rec.totalCalendarDays / 7).toFixed(1)} hafta</div>
+          <div class="stat-row">
+            <span>📝 İzin Günü:</span>
+            <span>${rec.vacationDaysUsed} gün</span>
+          </div>
+          <div class="stat-row">
+            <span>🏖️ Tatil Günü:</span>
+            <span>${rec.officialHolidayDates.length}</span>
+          </div>
+          <div class="stat-row">
+            <span>📅 Hafta Sonu:</span>
+            <span>${rec.weekendDates.length}</span>
+          </div>
+          <div class="stat-row">
+            <span>⭐ Verimlilik:</span>
+            <span>${rec.efficiency}x (${((rec.efficiency - 1) * 100).toFixed(0)}% artış)</span>
+          </div>
         `;
         recommendationsList.appendChild(item);
       });
 
-      // Takvim gösterimi
+      // Takvim gösterimi (en iyi seçeneği göster)
       calendarContainer.innerHTML = '';
-      const selectedRec = recommendations[0];
-      
-      // 3 ay göster
-      for (let offset = -1; offset <= 1; offset++) {
-        const month = startMonth + offset;
-        let displayMonth = month;
-        let displayYear = year;
+      if (recommendations.length > 0) {
+        const selectedRec = recommendations[0];
+        
+        // 3 ay göster (seçilen dönem çevresinde)
+        const startMonth = selectedRec.startDate.getMonth();
+        for (let offset = -1; offset <= 1; offset++) {
+          const month = startMonth + offset;
+          let displayMonth = month;
+          let displayYear = year;
 
-        if (displayMonth < 1) {
-          displayMonth += 12;
-          displayYear--;
-        } else if (displayMonth > 12) {
-          displayMonth -= 12;
-          displayYear++;
+          if (displayMonth < 0) {
+            displayMonth += 12;
+            displayYear--;
+          } else if (displayMonth >= 12) {
+            displayMonth -= 12;
+            displayYear++;
+          }
+
+          const calendar = createMiniCalendar(displayYear, displayMonth + 1, selectedRec, officialHolidays);
+          calendarContainer.appendChild(calendar);
         }
-
-        const calendar = createMiniCalendar(displayYear, displayMonth, selectedRec.holidayDates);
-        calendarContainer.appendChild(calendar);
       }
 
       resultsSection.classList.add('active');
       resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function createMiniCalendar(year, month, holidayDates) {
+    function createMiniCalendar(year, month, selectedRec, officialHolidays) {
       const div = document.createElement('div');
       div.className = 'mini-calendar';
+
+      const monthNames = [
+        'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+        'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+      ];
+
+      const dayNames = ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Pz'];
 
       const header = document.createElement('div');
       header.className = 'calendar-header';
@@ -630,13 +813,27 @@
           }
         }
 
-        const isHoliday = holidayDates.some(
+        // Resmi tatil mi kontrol et
+        const isOfficialHol = isOfficialHoliday(startDate, officialHolidays);
+        if (isOfficialHol) {
+          cell.classList.add('official-holiday');
+        }
+
+        // İzin kullanılan gün mi
+        const isVacationUsed = selectedRec.vacationDates.some(
           date => date.getDate() === startDate.getDate() &&
             date.getMonth() === startDate.getMonth() &&
             date.getFullYear() === startDate.getFullYear()
         );
 
-        if (isHoliday) {
+        if (isVacationUsed) {
+          cell.classList.add('vacation-used');
+        }
+
+        // Toplam tatil (hafta sonu + resmi tatil + izin)
+        const isInPeriod = startDate >= selectedRec.startDate && 
+                          startDate < selectedRec.endDate;
+        if (isInPeriod && !isVacationUsed && (isOfficialHol || (startDate.getDay() === 0 || startDate.getDay() === 6))) {
           cell.classList.add('holiday');
         }
 
