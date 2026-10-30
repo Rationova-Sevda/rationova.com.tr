@@ -65,8 +65,10 @@
 
 /* ---------- Giriş (hero) ---------- */
 .hp-hero { padding: 96px 0 88px; border-bottom: 1px solid var(--c-line); }
-.hp-hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; }
-.hp-hero h1 { margin: 0 0 22px; font-size: clamp(2.1rem, 4.2vw, 3.1rem); line-height: 1.12; font-weight: 700; }
+.hp-hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: stretch; }
+.hp-hero__text { display: flex; flex-direction: column; justify-content: space-between; }
+.hp-hero__text .hp-eyebrow { margin-top: -0.2em; }
+.hp-hero h1 { margin: 0; font-size: clamp(2.1rem, 4.2vw, 3.1rem); line-height: 1.12; font-weight: 700; }
 .hp-hero h1 em { font-style: normal; color: var(--c-accent); }
 .hp-mark {
   color: inherit;
@@ -74,7 +76,7 @@
   padding: 0 2px;
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
-.hp-lead { margin: 0 0 32px; max-width: 54ch; font-size: 1.12rem; line-height: 1.65; color: var(--c-muted); }
+.hp-lead { margin: 24px 0 32px; max-width: 54ch; font-size: 1.12rem; line-height: 1.65; color: var(--c-muted); }
 .hp-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Örnek karar ekranı */
@@ -90,18 +92,18 @@
 }
 .hp-mock__title { font-weight: 600; }
 .hp-chip { font-size: 0.72rem; padding: 3px 9px; border-radius: 99px; background: var(--c-accent-soft); color: var(--c-accent); font-weight: 600; }
-.hp-mock__body { padding: 20px; }
-.hp-mock__sel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.hp-mock__body { padding: 18px 20px 20px; }
+.hp-mock__sel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
 .hp-mock__sel div { border: 1px solid var(--c-line); border-radius: 6px; padding: 10px 12px; }
 .hp-mock__sel span { display: block; font-size: 0.72rem; color: var(--c-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px; }
 .hp-mock__sel strong { font-weight: 600; }
 .hp-mock table { width: 100%; border-collapse: collapse; }
-.hp-mock td { padding: 9px 0; border-bottom: 1px solid var(--c-line); }
+.hp-mock td { padding: 8px 0; border-bottom: 1px solid var(--c-line); }
 .hp-mock td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; font-variant-numeric: tabular-nums; font-weight: 600; }
 .hp-mock td small { display: block; color: var(--c-muted); font-weight: 400; font-size: 0.78rem; }
 .hp-warn { color: var(--c-red); }
 .hp-result {
-  margin-top: 18px; display: flex; gap: 14px; align-items: center;
+  margin-top: 16px; display: flex; gap: 14px; align-items: center;
   padding: 14px 16px; border-radius: 6px; background: var(--c-red-soft);
 }
 .hp-result__badge { display: block; text-align: center; background: var(--c-red); color: #fff; font-weight: 700; padding: 6px 14px; border-radius: 5px; letter-spacing: .02em; }
@@ -155,6 +157,7 @@
 /* ---------- Mobil ---------- */
 @media (max-width: 1000px) {
   .hp-hero__grid { grid-template-columns: 1fr; gap: 48px; }
+  .hp-hero__text { display: block; }
   .hp-steps { grid-template-columns: 1fr 1fr; }
   .hp-principles { grid-template-columns: 1fr 1fr; }
 }
@@ -216,9 +219,11 @@
     <!-- 1. Giriş -->
     <section class="hp-hero">
       <div class="container hp-hero__grid">
-        <div>
+        <div class="hp-hero__text">
+          <div>
           <p class="hp-eyebrow">Reçeteli üretim için planlama yazılımı</p>
           <h1>Stoktaki hammadde için <mark class="hp-mark">rasyonellik odaklı</mark> <em>üret / üretme</em> kararı.</h1>
+          </div>
           <p class="hp-lead">
             Rationova, stokta bekleyen bir hammaddenin hangi mamulde, ne miktarda ve hangi koşulda
             kullanılabileceğini hesaplar. Teknik olarak üretilebilir olanı, ekonomik olarak doğru olandan ayırır.
@@ -232,7 +237,7 @@
         <figure class="hp-mock" aria-label="Örnek karar ekranı">
           <div class="hp-mock__bar">
             <span class="hp-mock__title">Üret / Üretme Kararı</span>
-            <span class="hp-chip">Örnek senaryo</span>
+            <span class="hp-chip">Örnek senaryo · temsili veri</span>
           </div>
           <div class="hp-mock__body">
             <div class="hp-mock__sel">
@@ -252,7 +257,6 @@
               </div>
               <p>Üretim teknik olarak mümkün, ancak işletmenin kabul sınırları içinde ekonomik olarak rasyonel değil.</p>
             </div>
-            <p class="hp-mock__note">Temsili veridir.</p>
           </div>
         </figure>
       </div>
