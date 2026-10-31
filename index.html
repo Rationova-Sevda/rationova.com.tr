@@ -1,1 +1,385 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rationova | Stoktaki hammadde için rasyonellik odaklı üret / üretme kararı</title>
+  <meta name="description" content="Rationova, reçeteli üretim yapan işletmeler için stokta bekleyen hammaddeye yönelik rasyonellik odaklı üret / üretme kararı yazılımı geliştirir.">
+  <link rel="canonical" href="https://rationova.com.tr/">
 
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rationova | Rasyonellik odaklı üret / üretme kararı">
+  <meta property="og:description" content="Teknik olarak üretilebilir olanı, ekonomik olarak doğru olandan ayırır. Örnek senaryo talep üzerine paylaşılır.">
+  <meta property="og:url" content="https://rationova.com.tr/">
+  <meta property="og:image" content="https://rationova.com.tr/logo.jpg">
+  <meta property="og:locale" content="tr_TR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <style>
+/* ============================================================
+   Rationova – Ana sayfa
+   style.css'ten SONRA yüklenir. Kurallar hp- / cx- önekiyle
+   sınırlıdır; sitenin diğer sayfalarını etkilemez.
+   ============================================================ */
+.page-home {
+  --c-ink: #0f1b2d;
+  --c-muted: #5b6676;
+  --c-line: #e3e7ed;
+  --c-bg: #ffffff;
+  --c-bg-alt: #f6f8fa;
+  --c-accent: #1f4e8c;
+  --c-accent-dark: #163a69;
+  --c-accent-soft: #e8eef7;
+  --c-red: #b42318;
+  --c-red-soft: #fdecea;
+  --c-radius: 8px;
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--c-ink);
+  background: var(--c-bg);
+}
+.page-home h1, .page-home h2, .page-home h3 { color: var(--c-ink); letter-spacing: -0.015em; }
+
+/* Logodaki beyaz zemin, renkli menü çubuğunda kutu gibi görünmesin */
+.page-home .site-header .logo img { mix-blend-mode: multiply; }
+
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--c-ink); color: #fff; padding: 8px 14px; z-index: 100; }
+.skip-link:focus { left: 16px; top: 16px; }
+
+.hp-eyebrow { margin: 0 0 12px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-accent); }
+.hp-section { padding: 88px 0; }
+.hp-section--alt { background: var(--c-bg-alt); border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.hp-head { max-width: 680px; margin-bottom: 48px; }
+.hp-head h2 { margin: 0 0 14px; font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: 1.2; }
+.hp-head p { margin: 0; color: var(--c-muted); font-size: 1.05rem; line-height: 1.65; }
+
+/* ---------- Butonlar ---------- */
+.hp-btn { display: inline-block; padding: 13px 26px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border-radius: 6px; transition: background .15s, border-color .15s, color .15s; }
+.hp-btn--primary { background: var(--c-accent); color: #fff; }
+.hp-btn--primary:hover { background: var(--c-accent-dark); }
+
+/* ---------- Giriş ---------- */
+.hp-hero { padding: 88px 0; border-bottom: 1px solid var(--c-line); }
+.hp-hero__grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: stretch; }
+.hp-hero__text { display: flex; flex-direction: column; justify-content: space-between; }
+.hp-hero__text .hp-eyebrow { margin-top: -0.2em; }
+.hp-hero h1 { margin: 0; font-size: clamp(2.2rem, 4.4vw, 3.3rem); line-height: 1.1; font-weight: 700; }
+.hp-hero h1 em { font-style: normal; color: var(--c-accent); }
+.hp-mark { color: inherit; background: linear-gradient(transparent 62%, #dbe5f2 62%, #dbe5f2 92%, transparent 92%); padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.hp-lead { margin: 24px 0 32px; max-width: 50ch; font-size: 1.12rem; line-height: 1.65; color: var(--c-muted); }
+
+/* ---------- Örnek senaryo kartı (ara hesaplar gizli) ---------- */
+.hp-mock { margin: 0; background: #fff; border: 1px solid var(--c-line); border-radius: 10px; box-shadow: 0 1px 2px rgba(15,27,45,.04), 0 12px 32px rgba(15,27,45,.08); font-size: 0.9rem; overflow: hidden; }
+.hp-mock__bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--c-line); background: var(--c-bg-alt); }
+.hp-mock__title { font-weight: 600; }
+.hp-chip { font-size: 0.72rem; padding: 3px 9px; border-radius: 99px; background: var(--c-accent-soft); color: var(--c-accent); font-weight: 600; }
+.hp-mock__body { padding: 20px; }
+
+.hp-flow { display: grid; grid-template-columns: 1fr 92px 1fr; align-items: center; }
+.hp-node { border: 1px solid var(--c-line); border-radius: 6px; padding: 10px 12px; }
+.hp-node span { display: block; font-size: 0.72rem; color: var(--c-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px; }
+.hp-node strong { font-weight: 600; }
+.hp-link { position: relative; height: 30px; }
+.hp-link::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px dashed #b9c3d0; }
+.hp-link b {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--c-accent-soft); color: var(--c-accent); font-size: 0.95rem; font-weight: 700;
+  border: 1px solid #cbd8ea;
+}
+
+.hp-hidden { margin-top: 16px; border: 1px dashed #cdd5df; border-radius: 6px; padding: 14px 16px 12px; background: repeating-linear-gradient(135deg, #fbfcfd 0 8px, #f6f8fa 8px 16px); }
+.hp-hidden__row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 7px 0; }
+.hp-hidden__row + .hp-hidden__row { border-top: 1px solid #eceff3; }
+.hp-bar { display: block; height: 9px; border-radius: 5px; background: #e1e6ed; }
+.hp-bar--val { width: 64px; height: 11px; background: #cfd7e2; }
+.hp-hidden__note { display: flex; align-items: center; gap: 7px; margin: 8px 0 0; font-size: 0.78rem; color: var(--c-muted); }
+.hp-hidden__note svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.hp-result { margin-top: 16px; display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 6px; background: var(--c-red-soft); }
+.hp-result__decision { display: inline-grid; gap: 5px; flex-shrink: 0; }
+.hp-result__label { font-size: 0.72rem; font-weight: 600; color: #7a2e26; text-transform: uppercase; letter-spacing: .06em; }
+.hp-result__badge { display: block; text-align: center; background: var(--c-red); color: #fff; font-weight: 700; padding: 6px 14px; border-radius: 5px; letter-spacing: .02em; }
+.hp-result p { margin: 0; font-size: 0.85rem; line-height: 1.45; color: #5a1a14; }
+
+.hp-mock__foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 20px; border-top: 1px solid var(--c-line); background: var(--c-bg-alt); font-size: 0.85rem; color: var(--c-muted); }
+.hp-mock__foot a { color: var(--c-accent); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.hp-mock__foot a:hover { text-decoration: underline; }
+
+/* ---------- Problem ---------- */
+.hp-problems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.hp-problem { border-top: 2px solid var(--c-ink); padding-top: 20px; }
+.hp-problem h3 { margin: 0 0 10px; font-size: 1.1rem; }
+.hp-problem p { margin: 0; color: var(--c-muted); line-height: 1.65; }
+
+/* ---------- Sorular ---------- */
+.hp-questions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; counter-reset: soru; }
+.hp-question { counter-increment: soru; display: flex; gap: 20px; align-items: flex-start; background: #fff; border: 1px solid var(--c-line); border-radius: var(--c-radius); padding: 26px; font-size: 1.12rem; font-weight: 500; line-height: 1.45; }
+.hp-question::before { content: counter(soru, decimal-leading-zero); flex-shrink: 0; padding-top: 4px; font-size: 0.82rem; font-weight: 700; color: var(--c-accent); letter-spacing: .08em; }
+.hp-questions__foot { margin: 28px 0 0; color: var(--c-muted); }
+.hp-questions__foot a { color: var(--c-accent); font-weight: 600; text-decoration: none; }
+.hp-questions__foot a:hover { text-decoration: underline; }
+
+/* ---------- Sonuç ---------- */
+.hp-features { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+.hp-feature { padding: 32px 28px; border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.hp-icon { width: 26px; height: 26px; fill: none; stroke: var(--c-accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.hp-feature h3 { margin: 16px 0 8px; font-size: 1.05rem; }
+.hp-feature p { margin: 0; color: var(--c-muted); line-height: 1.6; font-size: 0.95rem; }
+
+/* ---------- Kapanış ---------- */
+.hp-cta { background: var(--c-ink); color: #c9d1dc; padding: 72px 0; }
+.hp-cta__inner { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+.hp-cta h2 { color: #fff; margin: 0 0 10px; font-size: clamp(1.5rem, 2.8vw, 1.9rem); }
+.hp-cta p { margin: 0; max-width: 58ch; line-height: 1.6; }
+.hp-cta__actions { display: flex; gap: 12px; flex-shrink: 0; }
+.hp-cta .hp-btn--primary { background: #fff; color: var(--c-ink); white-space: nowrap; }
+.hp-cta .hp-btn--primary:hover { background: var(--c-accent-soft); }
+.hp-btn--line { color: #fff; border: 1px solid rgba(255,255,255,.35); white-space: nowrap; }
+.hp-btn--line:hover { border-color: #fff; }
+
+/* ---------- Altbilgi ---------- */
+.cx-wordmark { display: inline-block; margin-bottom: 8px; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; color: #fff !important; text-decoration: none; }
+.cx-copy { margin: 32px 0 0; padding-top: 20px; border-top: 1px solid rgba(127,127,127,.25); font-size: 0.85rem; opacity: .75; max-width: none !important; }
+
+/* ---------- Mobil ---------- */
+@media (max-width: 1000px) {
+  .hp-hero__grid { grid-template-columns: 1fr; gap: 48px; }
+  .hp-hero__text { display: block; }
+  .hp-cta__inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 760px) {
+  .hp-section { padding: 64px 0; }
+  .hp-hero { padding: 56px 0 64px; }
+  .hp-problems, .hp-features, .hp-questions { grid-template-columns: 1fr; }
+  .hp-problems { gap: 28px; }
+  .hp-mock__body { padding: 16px; }
+  .hp-mock { font-size: 0.85rem; }
+  .hp-flow { grid-template-columns: 1fr 52px 1fr; }
+  .hp-result { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .hp-mock__foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .hp-cta__actions { flex-direction: column; align-self: stretch; }
+  .hp-cta__actions .hp-btn { text-align: center; }
+}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Rationova",
+    "url": "https://rationova.com.tr",
+    "logo": "https://rationova.com.tr/logo.jpg",
+    "email": "sevda.dede@rationova.com.tr",
+    "telephone": "+90-532-690-0404",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Barış Mah. Koşu Yolu Cad. Ar-Ge ve İnovasyon Binası No: 26 İç Kapı No: 48",
+      "addressLocality": "Gebze",
+      "addressRegion": "Kocaeli",
+      "addressCountry": "TR"
+    }
+  }
+  </script>
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#icerik">İçeriğe geç</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html" aria-label="Rationova ana sayfa">
+        <img src="logo.jpg" alt="Rationova">
+      </a>
+      <button class="menu-toggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="ana-menu">☰</button>
+      <nav class="nav-links" id="ana-menu" aria-label="Ana menü">
+        <a class="active" href="index.html" aria-current="page">Ana Sayfa</a>
+        <a href="hakkimizda.html">Hakkımızda</a>
+        <a href="urunler.html">Ürünler</a>
+        <a href="misyon-vizyon.html">Kurumsal</a>
+        <a href="blog.html">Blog</a>
+        <a href="izin-planla.html">İzin Planla</a>
+        <a href="iletisim.html">İletişim</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="icerik">
+
+    <!-- 1. Giriş -->
+    <section class="hp-hero">
+      <div class="container hp-hero__grid">
+        <div class="hp-hero__text">
+          <div>
+            <p class="hp-eyebrow">Reçeteli üretim için planlama yazılımı</p>
+            <h1>Stoktaki hammadde için <mark class="hp-mark">rasyonellik odaklı</mark> <em>üret / üretme</em> kararı.</h1>
+          </div>
+          <p class="hp-lead">
+            Stokta bekleyen hammaddeniz için üretim kararını tahmine değil, gerekçeli bir hesaba dayandırın.
+            Rationova, teknik olarak üretilebilir olanı ekonomik olarak doğru olandan ayırır.
+          </p>
+          <div>
+            <a class="hp-btn hp-btn--primary" href="iletisim.html?konu=tanitim">Tanıtım talep edin</a>
+          </div>
+        </div>
+
+        <!-- Ara hesaplar bilinçli olarak sayfada yer almaz; yalnızca biçim gösterilir. -->
+        <figure class="hp-mock" aria-label="Örnek senaryo önizlemesi">
+          <div class="hp-mock__bar">
+            <span class="hp-mock__title">Üret / Üretme Kararı</span>
+            <span class="hp-chip">Örnek senaryo</span>
+          </div>
+          <div class="hp-mock__body">
+            <div class="hp-flow">
+              <div class="hp-node"><span>Seçili hammadde</span><strong>HM-2041</strong></div>
+              <div class="hp-link" aria-hidden="true"><b>?</b></div>
+              <div class="hp-node"><span>Hedef mamul</span><strong>MM-118</strong></div>
+            </div>
+
+            <div class="hp-hidden">
+              <div class="hp-hidden__row" aria-hidden="true"><span class="hp-bar" style="width:58%"></span><span class="hp-bar hp-bar--val"></span></div>
+              <div class="hp-hidden__row" aria-hidden="true"><span class="hp-bar" style="width:36%"></span><span class="hp-bar hp-bar--val" style="width:52px"></span></div>
+              <div class="hp-hidden__row" aria-hidden="true"><span class="hp-bar" style="width:47%"></span><span class="hp-bar hp-bar--val" style="width:72px"></span></div>
+              <div class="hp-hidden__row" aria-hidden="true"><span class="hp-bar" style="width:41%"></span><span class="hp-bar hp-bar--val" style="width:44px"></span></div>
+              <p class="hp-hidden__note">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                Ara hesaplar talep üzerine paylaşılır.
+              </p>
+            </div>
+
+            <div class="hp-result">
+              <div class="hp-result__decision">
+                <span class="hp-result__label">Önerilen karar:</span>
+                <span class="hp-result__badge">ÜRETME</span>
+              </div>
+              <p>Üretim teknik olarak mümkün, ancak işletmenin kabul sınırları içinde ekonomik olarak rasyonel değil.</p>
+            </div>
+          </div>
+          <div class="hp-mock__foot">
+            <span>Senaryonun tamamını görmek için</span>
+            <a href="iletisim.html?konu=senaryo">Örnek senaryoyu talep edin →</a>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 2. Problem -->
+    <section class="hp-section">
+      <div class="container">
+        <div class="hp-head">
+          <p class="hp-eyebrow">Problem</p>
+          <h2>ERP raporu hammaddeyi listeler, kararı vermez.</h2>
+          <p>Reçeteli üretimde hammadde stoğu kaçınılmaz olarak birikir. Onunla ne yapılacağı sorusu ise çoğu işletmede cevapsız kalır.</p>
+        </div>
+        <div class="hp-problems">
+          <div class="hp-problem">
+            <h3>Bağlı sermaye</h3>
+            <p>Rutin planlamanın dışında kalan hammadde bilançoda varlık olarak görünür; kullanılmadıkça işletme sermayesini bağlar.</p>
+          </div>
+          <div class="hp-problem">
+            <h3>Raporlanır, çözülmez</h3>
+            <p>Mevcut sistemler bu stoğu yavaş hareket eden malzeme olarak listeler; onunla ne yapılması gerektiğini söylemez.</p>
+          </div>
+          <div class="hp-problem">
+            <h3>Elle ve izsiz</h3>
+            <p>Karar çoğunlukla elektronik tablolarla, günler süren ve sonradan izi sürülemeyen hesaplarla verilir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Sorular -->
+    <section class="hp-section hp-section--alt">
+      <div class="container">
+        <div class="hp-head">
+          <p class="hp-eyebrow">Doğru soru</p>
+          <h2>"Üretebilir miyim?" değil, "üretmeli miyim?"</h2>
+          <p>Stoktaki hammaddeyi değerlendirmek, yalnızca onu bir ürüne dönüştürmek değildir. Rationova şu sorulara gerekçeli yanıt verir:</p>
+        </div>
+        <ol class="hp-questions">
+          <li class="hp-question">Bu hammaddeyi kullanmak için üretim yapmak sorunu çözer mi, yoksa yalnızca stoğun biçimini mi değiştirir?</li>
+          <li class="hp-question">Teknik olarak mümkün olan üretim, ekonomik olarak da doğru mu?</li>
+          <li class="hp-question">Üretmemek hangi durumda doğru karardır?</li>
+          <li class="hp-question">Bu karar hangi hesaba dayanıyor ve aynı veriyle herkes aynı sonuca ulaşabilir mi?</li>
+        </ol>
+        <p class="hp-questions__foot">Yanıtları kendi sektörünüze yakın bir örnekle birlikte gösterelim. <a href="iletisim.html?konu=senaryo">Örnek senaryoyu talep edin →</a></p>
+      </div>
+    </section>
+
+    <!-- 4. Sonuç -->
+    <section class="hp-section">
+      <div class="container">
+        <div class="hp-head">
+          <p class="hp-eyebrow">Sonuç</p>
+          <h2>Tahmin yerine gerekçeli karar.</h2>
+        </div>
+        <div class="hp-features">
+          <div class="hp-feature">
+            <svg class="hp-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            <h3>Gerekçeli öneri</h3>
+            <p>Her öneri, dayandığı hesapla birlikte sunulur; kararın nedeni sonradan da görülebilir.</p>
+          </div>
+          <div class="hp-feature">
+            <svg class="hp-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 20c0-3 2.5-5 5-5s5 2 5 5M12 20c0-3 2.5-5 5-5s5 2 5 5"/></svg>
+            <h3>Ortak dil</h3>
+            <p>Üretim, satın alma ve finans aynı sonuca, aynı gerekçeyle bakar.</p>
+          </div>
+          <div class="hp-feature">
+            <svg class="hp-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="1.5"/><path d="M14 8h7M14 12h7M14 16h5"/></svg>
+            <h3>Mevcut sisteminizle birlikte</h3>
+            <p>ERP'nizin yerini almaz; onun yanıtlamadığı kararı tamamlar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Kapanış -->
+    <section class="hp-cta">
+      <div class="container hp-cta__inner">
+        <div>
+          <h2>Örnek senaryonun tamamını görmek ister misiniz?</h2>
+          <p>Ara hesaplarıyla birlikte örnek senaryoyu ve yazılımı, talebiniz üzerine planlanan bir görüşmede paylaşıyoruz. Talebinize iki iş günü içinde dönüş yaparız.</p>
+        </div>
+        <div class="hp-cta__actions">
+          <a class="hp-btn hp-btn--primary" href="iletisim.html?konu=senaryo">Örnek senaryoyu talep edin</a>
+          <a class="hp-btn hp-btn--line" href="iletisim.html?konu=tanitim">Tanıtım talep edin</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="logo footer-logo cx-wordmark" href="index.html">Rationova</a>
+          <p>Stoktaki hammadde için rasyonellik odaklı üret / üretme kararı.</p>
+        </div>
+        <div>
+          <h4>Şirket</h4>
+          <a href="hakkimizda.html">Hakkımızda</a>
+          <a href="misyon-vizyon.html">Misyon &amp; Vizyon</a>
+          <a href="urunler.html">Ürünler</a>
+        </div>
+        <div>
+          <h4>Bilgiler</h4>
+          <a href="blog.html">Blog</a>
+          <a href="izin-planla.html">İzin Planla</a>
+          <a href="iletisim.html">İletişim</a>
+        </div>
+        <div>
+          <h4>Bağlantılar</h4>
+          <!-- Gerçek LinkedIn şirket sayfası adresiyle değiştirin; hesap yoksa bu satırı silin -->
+          <a href="https://www.linkedin.com/company/rationova" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <p class="cx-copy">© <span id="yil">2026</span> Rationova. Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>document.getElementById('yil').textContent = new Date().getFullYear();</script>
+</body>
+</html>

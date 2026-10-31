@@ -15,6 +15,9 @@
   <meta property="og:image" content="https://rationova.com.tr/logo.jpg">
   <meta property="og:locale" content="tr_TR">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
   <link rel="stylesheet" href="style.css">
   <style>
 /* ============================================================
@@ -33,9 +36,12 @@
   --cx-accent-dark: #163a69;
   --cx-error: #b42318;
   --cx-radius: 8px;
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color: var(--cx-ink);
   background: var(--cx-bg);
 }
+
+.page-contact .site-header .logo img { mix-blend-mode: multiply; }
 
 .page-contact h1,
 .page-contact h2 { color: var(--cx-ink); letter-spacing: -0.01em; }
@@ -252,10 +258,9 @@
     <!-- Sayfa başlığı -->
     <section class="cx-hero">
       <div class="container">
-        <p class="cx-eyebrow">İletişim</p>
         <h1>Stoktaki hammaddeniz için hesabı birlikte yapalım.</h1>
         <p class="cx-lead">
-          Ürün tanıtımı, pilot uygulama veya Ar-Ge iş birliği talepleriniz için bize yazın.
+          Tanıtım, örnek senaryo, pilot uygulama veya Ar-Ge iş birliği talepleriniz için bize yazın.
           Talepleri ekibimiz doğrudan değerlendirir; genellikle iki iş günü içinde dönüş yaparız.
         </p>
       </div>
@@ -267,8 +272,8 @@
         <div class="cx-topics">
           <article class="cx-topic">
             <svg class="cx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v12H3zM8 20h8M12 16v4"/></svg>
-            <h2>Ürün tanıtımı</h2>
-            <p>Yazılımın seçili bir hammaddeden başlayan hesap zincirini kendi senaryolarınız üzerinden görün.</p>
+            <h2>Tanıtım ve örnek senaryo</h2>
+            <p>Örnek senaryoyu ara hesaplarıyla birlikte ve yazılımı, sizin için planlanan bir görüşmede gösterelim.</p>
           </article>
           <article class="cx-topic">
             <svg class="cx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10l8-6 8 6v10h-5v-6H9v6z"/></svg>
@@ -344,17 +349,18 @@
 
             <div class="cx-row">
               <div class="cx-field">
-                <label for="sirket">Kurum / Şirket</label>
-                <input type="text" id="sirket" name="sirket" autocomplete="organization">
+                <label for="sirket">Kurum / Şirket <span aria-hidden="true">*</span></label>
+                <input type="text" id="sirket" name="sirket" autocomplete="organization" required>
               </div>
               <div class="cx-field">
                 <label for="konu">Konu <span aria-hidden="true">*</span></label>
                 <select id="konu" name="konu" required>
                   <option value="" selected disabled>Seçiniz</option>
-                  <option>Ürün tanıtımı / demo talebi</option>
-                  <option>Pilot uygulama</option>
-                  <option>Ar-Ge iş birliği</option>
-                  <option>Diğer</option>
+                  <option value="Örnek senaryo talebi" data-kod="senaryo">Örnek senaryo talebi</option>
+                  <option value="Tanıtım talebi" data-kod="tanitim">Tanıtım talebi</option>
+                  <option value="Pilot uygulama" data-kod="pilot">Pilot uygulama</option>
+                  <option value="Ar-Ge iş birliği" data-kod="arge">Ar-Ge iş birliği</option>
+                  <option value="Diğer">Diğer</option>
                 </select>
               </div>
             </div>
@@ -385,7 +391,7 @@
       <div class="footer-grid">
         <div>
           <a class="logo footer-logo cx-wordmark" href="index.html">Rationova</a>
-          <p>Reçeteli üretimde stoktaki hammaddeler için izlenebilir üret / üretme kararı.</p>
+          <p>Stoktaki hammadde için rasyonellik odaklı üret / üretme kararı.</p>
         </div>
         <div>
           <h4>Şirket</h4>
@@ -417,6 +423,15 @@
       var hata = document.getElementById('form-hata');
       var hedef = 'sevda.dede@rationova.com.tr';
       document.getElementById('yil').textContent = new Date().getFullYear();
+
+      // Ana sayfadaki bağlantılardan gelen konuyu otomatik seç (ör. iletisim.html?konu=senaryo)
+      try {
+        var kod = new URLSearchParams(window.location.search).get('konu');
+        if (kod) {
+          var secenek = document.querySelector('#konu option[data-kod="' + kod + '"]');
+          if (secenek) secenek.selected = true;
+        }
+      } catch (err) {}
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
