@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RatioNova | From Data to Decisions</title>
-  <meta name="description" content="RatioNova – üretim planlama, stok optimizasyonu ve karar destek sistemleri. Coming soon, by your side.">
+  <meta name="description" content="RatioNova – üretim planlama, stok optimizasyonu ve karar destek sistemleri.">
   <link rel="canonical" href="https://rationova.com.tr/">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="RatioNova | From Data to Decisions">
-  <meta property="og:description" content="From Raw Materials to Finished Products. Coming soon, by your side.">
+  <meta property="og:description" content="From Raw Materials to Finished Products.">
   <meta property="og:url" content="https://rationova.com.tr/">
   <meta property="og:image" content="https://rationova.com.tr/logo.jpg">
   <meta property="og:locale" content="tr_TR">
@@ -21,7 +21,7 @@
 :root {
   --navy: #3d4174;
   --blue: #45497e;
-  --teal: #4b5e24;
+  --teal: #5b7b1d;
   --lav: #575b8e;
   --muted: #74779c;
   --bg: #fbfbfd;
@@ -40,24 +40,25 @@ body {
 .stage {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   align-items: center;
-  gap: clamp(32px, 5vw, 80px);
-  width: 100%; max-width: 1240px;
+  gap: clamp(56px, 8vw, 128px);
+  width: 100%; max-width: 1320px;
   margin: 0 auto;
   padding: clamp(32px, 6vh, 72px) clamp(20px, 5vw, 64px);
 }
 
 .brand { margin: 0 0 clamp(14px, 2.4vh, 22px); font-size: clamp(2rem, 3.6vw, 2.9rem); font-weight: 600; letter-spacing: -0.02em; color: #111318; }
 .line1 { margin: 0; font-size: clamp(1.15rem, 2.1vw, 1.75rem); font-weight: 300; color: var(--navy); }
-.line2 { margin: 0.35em 0 0; font-size: clamp(2.3rem, 4.4vw, 3.9rem); white-space: nowrap; font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; color: var(--teal); }
+.line2 { margin: 0.35em 0 0; font-size: clamp(2.2rem, 3.7vw, 3.6rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; color: var(--teal); }
 .areas { margin: clamp(18px, 3vh, 30px) 0 0; font-size: clamp(0.92rem, 1.25vw, 1.1rem); font-weight: 400; color: var(--lav); line-height: 1.6; }
 .areas span { white-space: nowrap; }
 .areas b { font-weight: 400; margin: 0 0.15em; }
 
 .soon { display: flex; align-items: center; gap: 18px; margin-top: clamp(26px, 4.5vh, 44px); }
 .soon::before { content: ""; width: 92px; height: 1.5px; background: var(--teal); flex-shrink: 0; }
-.soon p { margin: 0; font-size: clamp(1.05rem, 1.5vw, 1.3rem); font-weight: 500; color: var(--teal); letter-spacing: 0.01em; }
+.soon a { font-size: clamp(1.02rem, 1.4vw, 1.2rem); font-weight: 500; color: var(--teal); letter-spacing: 0.01em; text-decoration: none; }
+.soon a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 /* Diyagram */
 .flow { width: 100%; height: auto; display: block; overflow: visible; }
@@ -75,19 +76,14 @@ body {
   .edge:nth-of-type(2) { animation-delay: .1s } .edge:nth-of-type(3) { animation-delay: .2s }
   .edge:nth-of-type(4) { animation-delay: .3s } .edge:nth-of-type(5) { animation-delay: .4s }
   .edge:nth-of-type(6) { animation-delay: .5s } .edge:nth-of-type(7) { animation-delay: .6s }
+  .edge:nth-of-type(8) { animation-delay: .7s } .edge:nth-of-type(9) { animation-delay: .8s } .edge:nth-of-type(10) { animation-delay: .9s }
   .edge.hi { animation-delay: 1s; animation-duration: 1.2s; }
   .check, .sel-note { opacity: 0; animation: fade .6s ease-out 2.1s forwards; }
 }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @keyframes fade { to { opacity: 1; } }
 
-footer { padding: 0 20px 22px; text-align: center; font-size: 0.85rem; color: var(--muted); }
-footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(116,119,156,.35); }
-footer a:hover { color: var(--teal); border-color: var(--teal); }
 
-@media (max-width: 1100px) {
-  .line2 { white-space: normal; }
-}
 @media (max-width: 900px) {
   .stage { grid-template-columns: minmax(0, 1fr); gap: 36px; align-content: center; }
   .areas span { display: block; white-space: normal; }
@@ -103,50 +99,44 @@ footer a:hover { color: var(--teal); border-color: var(--teal); }
       <p class="line1">From Raw Materials to Finished Products</p>
       <p class="line2">From Data to Decisions</p>
       <p class="areas"><span>Production Planning</span> <b>•</b> <span>Inventory Optimization</span> <b>•</b> <span>Decision Support Systems</span></p>
-      <div class="soon"><p>Coming soon, by your side.</p></div>
+      <div class="soon"><a href="mailto:contact@rationova.com.tr">contact@rationova.com.tr</a></div>
     </section>
 
-    <svg class="flow" viewBox="0 0 700 420" role="img" aria-label="Hammaddelerden ürün alternatiflerine karar diyagramı">
-      <path class="edge" d="M150 40 C 310 40, 310 165, 470 165"/>
-      <path class="edge" d="M150 40 C 310 40, 310 295, 470 295"/>
-      <path class="edge" d="M150 125 C 310 125, 310 50, 470 50"/>
-      <path class="edge" d="M150 125 C 310 125, 310 295, 470 295"/>
-      <path class="edge" d="M150 225 C 310 225, 310 50, 470 50"/>
-      <path class="edge" d="M150 225 C 310 225, 310 295, 470 295"/>
-      <path class="edge" d="M150 300 C 310 300, 310 165, 470 165"/>
-      <path class="edge hi" d="M150 125 C 310 125, 310 165, 470 165"/>
-
-      <g fill="#45497e">
-        <circle cx="150" cy="40" r="5"/><circle cx="150" cy="225" r="5"/><circle cx="150" cy="300" r="5"/>
-      </g>
-      <circle cx="150" cy="125" r="5" fill="#4b5e24"/>
-      <circle cx="470" cy="50" r="5" fill="#8a8fa8"/>
-      <circle cx="470" cy="165" r="5.5" fill="#4b5e24"/>
-      <circle cx="470" cy="295" r="5" fill="#8a8fa8"/>
-
-      <text class="rm" x="134" y="48" text-anchor="end">RM-001</text>
-      <text class="rm" x="134" y="133" text-anchor="end" style="fill:#4b5e24">RM-014</text>
-      <text class="note" x="50" y="162">Material under</text>
-      <text class="note" x="50" y="184">evaluation</text>
-      <text class="rm" x="134" y="233" text-anchor="end">RM-028</text>
-      <text class="rm" x="134" y="308" text-anchor="end">RM-042</text>
-
-      <text class="fg" x="488" y="59">FG-101</text>
-      <text class="fg sel" x="488" y="174">FG-205</text>
-      <g class="check">
-        <circle cx="628" cy="163" r="15" fill="#4b5e24"/>
-        <path d="M621 163.5 l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
-      <text class="note sel-note" x="488" y="206">Selected for production</text>
-      <text class="fg" x="488" y="304">FG-308</text>
-
-      <text class="cap" x="50" y="390">raw materials</text>
-      <text class="cap" x="488" y="390">product alternatives</text>
+    <svg class="flow" viewBox="0 0 700 440" role="img" aria-label="Hammaddelerden ürün alternatiflerine karar diyagramı">
+      <path class="edge" d="M150 30 C 310 30, 310 55, 470 55"/>
+      <path class="edge" d="M150 30 C 310 30, 310 345, 470 345"/>
+      <path class="edge" d="M150 105 C 310 105, 310 200, 470 200"/>
+      <path class="edge" d="M150 105 C 310 105, 310 55, 470 55"/>
+      <path class="edge" d="M150 180 C 310 180, 310 55, 470 55"/>
+      <path class="edge" d="M150 180 C 310 180, 310 345, 470 345"/>
+      <path class="edge" d="M150 290 C 310 290, 310 200, 470 200"/>
+      <path class="edge" d="M150 290 C 310 290, 310 345, 470 345"/>
+      <path class="edge" d="M150 365 C 310 365, 310 55, 470 55"/>
+      <path class="edge" d="M150 365 C 310 365, 310 200, 470 200"/>
+      <path class="edge hi" d="M150 180 C 310 180, 310 200, 470 200"/>
+      <circle cx="150" cy="30" r="5" fill="#45497e"/>
+      <circle cx="150" cy="105" r="5" fill="#45497e"/>
+      <circle cx="150" cy="180" r="5" fill="#5b7b1d"/>
+      <circle cx="150" cy="290" r="5" fill="#45497e"/>
+      <circle cx="150" cy="365" r="5" fill="#45497e"/>
+      <circle cx="470" cy="55" r="5" fill="#8a8fa8"/>
+      <circle cx="470" cy="200" r="5.5" fill="#5b7b1d"/>
+      <circle cx="470" cy="345" r="5" fill="#8a8fa8"/>
+      <text class="rm" x="134" y="38" text-anchor="end">RM-001</text>
+      <text class="rm" x="134" y="113" text-anchor="end">RM-67</text>
+      <text class="rm" x="134" y="188" text-anchor="end" style="fill:#5b7b1d">RM-145</text>
+      <text class="rm" x="134" y="298" text-anchor="end">RM-280</text>
+      <text class="rm" x="134" y="373" text-anchor="end">RM-324</text>
+      <text class="note" x="134" y="214" text-anchor="end">Material under</text>
+      <text class="note" x="134" y="235" text-anchor="end">evaluation</text>
+      <text class="fg" x="488" y="64">P100K14</text>
+      <text class="fg sel" x="488" y="209" id="selp">P150R39</text>
+      <text class="fg" x="488" y="354">P280A86</text>
+      <g class="check" id="chk" transform="translate(0,0)"><circle cx="632" cy="199" r="15" fill="#5b7b1d"/><path d="M625 199.5 l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <text class="note sel-note" x="488" y="241">Selected for production</text>
+      <text class="cap" x="134" y="425" text-anchor="end">raw materials</text>
+      <text class="cap" x="488" y="425">product alternatives</text>
     </svg>
   </main>
-
-  <footer>
-    <a href="mailto:contact@rationova.com.tr">contact@rationova.com.tr</a>
-  </footer>
 </body>
 </html>
